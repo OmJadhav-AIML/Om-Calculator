@@ -1,0 +1,41 @@
+
+root = tk.Tk()
+root.title("Om's Calculator")
+root.geometry("300x400")
+root.configure(bg="#E8F0F2")  # Background color
+
+entry = tk.Entry(root, width=16, font=('Arial', 20), bd=5, relief='sunken', justify='right')
+entry.grid(row=0, column=0, columnspan=4, padx=10, pady=10)
+
+
+def click(event):
+    current = entry.get()
+    text = event.widget.cget("text")
+    if text == "=":
+        try:
+            result = eval(current)
+            entry.delete(0, tk.END)
+            entry.insert(0, result)
+        except:
+            entry.delete(0, tk.END)
+            entry.insert(0, "Error")
+    elif text == "C":
+        entry.delete(0, tk.END)
+    else:
+        entry.insert(tk.END, text)
+
+
+buttons = [
+    ['7', '8', '9', '/'],
+    ['4', '5', '6', '*'],
+    ['1', '2', '3', '-'],
+    ['C', '0', '=', '+']
+]
+
+for i in range(4):
+    for j in range(4):
+        btn = tk.Button(root, text=buttons[i][j], font=('Arial', 18), width=5, height=2, bg="#D1E8E2")
+        btn.grid(row=i+1, column=j, padx=5, pady=5)
+        btn.bind("<Button-1>", click)
+
+root.mainloop()
